@@ -148,14 +148,21 @@
         </div>
     </div>
 
-    <script>
+   <script>
         const album = document.getElementById('album');
-        const totalPhotos = 11;
+        const totalPhotos = album.children.length;
         let currentIndex = 0;
 
         function autoSlide() {
-            currentIndex = (currentIndex + 1) % totalPhotos;
-            album.style.transform = `translateX(-${currentIndex * 420}px)`;
+            currentIndex++;
+            if (currentIndex === totalPhotos) {
+                album.style.transition = "none"; // Instantly reset to the beginning
+                album.style.transform = "translateX(0)";
+                currentIndex = 0;
+            } else {
+                album.style.transition = "transform 0.8s ease-in-out"; // Smooth transition
+                album.style.transform = `translateX(-${currentIndex * 150}px)`; // Adjust based on photo size
+            }
         }
 
         setInterval(autoSlide, 1000);
